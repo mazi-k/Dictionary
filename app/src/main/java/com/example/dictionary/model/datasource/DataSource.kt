@@ -1,7 +1,7 @@
 package com.example.dictionary.model.datasource
 
-import io.reactivex.Observable
+import com.example.dictionary.model.data.DataModel
 
 interface DataSource<T> {
-    fun getData(word: String): Observable<T>
+    suspend fun getData(word: String): List<DataModel>
 }
