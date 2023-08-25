@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Словарь</string>
+    <string name="error_textview_stub">Ошибка</string>
+    <string name="reload_button">Перезагрузить</string>
+    <string name="undefined_error">Неизвестная ошибка</string>
+    <string name="empty_server_response_on_success">Пустой ответ</string>
+    <string name="button_search">Искать</string>
+    <string name="search_hint">Новое слово</string>
+    <string name="delete_description">X</string>
+    <string name="image_stub">image</string>
+    <string name="error_stub">Ошибка</string>
+    <string name="dialog_button_cancel">Отмена</string>
+    <string name="dialog_title_stub">Неизвестная ошибка</string>
+    <string name="dialog_title_device_is_offline">Нет соединения с Интернетом</string>
+    <string name="dialog_message_device_is_offline">Приложение не работает без Инернета. Пожалуйста, проверьте соединение.</string>
+    <string name="dialog_tittle_sorry">Извините</string>
+    <string name="menu_title_history">История</string>
+</resources>
