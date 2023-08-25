@@ -1,7 +1,7 @@
-package com.example.dictionary.model.datasource
+package com.example.dictionary.model.repository
 
 import com.example.dictionary.model.data.AppState
 
-interface DataSourceLocal<T>: DataSource<T>{
+interface RepositoryLocal<T> : Repository<T> {
     suspend fun saveToDB(appState: AppState)
 }

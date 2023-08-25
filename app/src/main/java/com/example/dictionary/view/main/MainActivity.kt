@@ -1,9 +1,10 @@
 package com.example.dictionary.view.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionary.R
 import com.example.dictionary.databinding.ActivityMainBinding
@@ -13,6 +14,7 @@ import com.example.dictionary.utils.convertMeaningsToString
 import com.example.dictionary.utils.isOnline
 import com.example.dictionary.view.base.BaseActivity
 import com.example.dictionary.view.description.DescriptionActivity
+import com.example.dictionary.view.history.HistoryActivity
 import com.example.dictionary.view.main.adapter.MainAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,10 +29,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: DataModel) {
-                startActivity( DescriptionActivity.getIntent(
-                    this@MainActivity,
-                    data.text!!, convertMeaningsToString(data.meanings!!), data.meanings[0].imageUrl
-                ) )
+                startActivity(
+                    DescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text!!,
+                        convertMeaningsToString(data.meanings!!),
+                        data.meanings[0].imageUrl
+                    )
+                )
             }
         }
 
@@ -62,38 +68,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         initViews()
     }
 
-    override fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                showViewWorking()
-                val data = appState.data
-                if (data.isNullOrEmpty()) {
-                    showAlertDialog(
-                        getString(R.string.dialog_tittle_sorry),
-                        getString(R.string.empty_server_response_on_success)
-                    )
-                } else {
-                    adapter.setData(data)
-                }
-            }
-            is AppState.Loading -> {
-                showViewLoading()
-                if (appState.progress != null) {
-                    binding.progressBarHorizontal.visibility = VISIBLE
-                    binding.progressBarRound.visibility = GONE
-                    binding.progressBarHorizontal.progress = appState.progress
-                } else {
-                    binding.progressBarHorizontal.visibility = GONE
-                    binding.progressBarRound.visibility = VISIBLE
-                }
-            }
-            is AppState.Error -> {
-                showViewWorking()
-                showAlertDialog(getString(R.string.error_stub), appState.error.message)
-            }
-        }
-    }
-
     private fun initViews() {
         binding.searchFab.setOnClickListener(fabClickListener)
         binding.mainActivityRecyclerview.layoutManager = LinearLayoutManager(applicationContext)
@@ -109,13 +83,25 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         model.subscribe().observe(this@MainActivity) { renderData(it) }
     }
 
-    private fun showViewWorking() {
-        binding.loadingFrameLayout.visibility = GONE
+    override fun setDataToAdapter(data: List<DataModel>) {
+        adapter.setData(data)
     }
 
-    private fun showViewLoading() {
-        binding.loadingFrameLayout.visibility = VISIBLE
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =

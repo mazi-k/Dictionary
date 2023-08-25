@@ -21,7 +21,6 @@ class MainViewModel(
     override fun getData(word: String, isOnline: Boolean) {
         _mutableLiveData.value = AppState.Loading(null)
         cancelJob()
-        // Запускаем корутину для асинхронного доступа к серверу с помощью launch
         viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
