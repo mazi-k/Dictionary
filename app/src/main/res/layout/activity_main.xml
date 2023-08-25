@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+
+
     <FrameLayout
         android:id="@+id/working_linear_layout"
         android:layout_width="match_parent"
@@ -23,7 +25,8 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"/>
     </FrameLayout>
 
     <FrameLayout
